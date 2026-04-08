@@ -5,16 +5,22 @@ class SidequestsController < ApplicationController
   end
 
   def show
-    @sidequest = Sidequest.find_by!(slug: params[:id])
+    @sidequest = Sidequest.find_by(slug: params[:id])
+    @sidequest ||= minequest_fallback_sidequest if params[:id] == "minequest"
+    raise ActiveRecord::RecordNotFound unless @sidequest
 
     if @sidequest.external_page_link.present?
       redirect_to @sidequest.external_page_link, allow_other_host: true and return
     end
 
-    @approved_entries = @sidequest.sidequest_entries
-      .approved
-      .joins(:project)
-      .includes(project: :memberships)
+    @approved_entries = if @sidequest.id.present?
+      @sidequest.sidequest_entries
+        .approved
+        .joins(:project)
+        .includes(project: :memberships)
+    else
+      SidequestEntry.none
+    end
     if @sidequest.slug == "webos"
       @prizes = ShopItem.where("? = ANY(requires_achievement)", "sidequest_webos").where(enabled: true)
     end
@@ -35,5 +41,15 @@ class SidequestsController < ApplicationController
     if lookup_context.exists?(custom_template)
       render custom_template
     end
+  end
+
+  private
+
+  def minequest_fallback_sidequest
+    Sidequest.new(
+      slug: "minequest",
+      title: "Minequest",
+      description: "Minequest is coming soon. Check back here for challenge details, timeline, and submission steps."
+    )
   end
 end

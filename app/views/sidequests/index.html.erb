@@ -12,8 +12,21 @@
 <div class="sidequests-index">
   <h1 class="sidequests-index__subtitle">Looking for a sidequest? Take on one of these challenges for extra bonuses!</h1>
 
+  <% minequest_sidequests, other_active_sidequests = @active_sidequests.partition do |sidequest|
+       sidequest.slug.to_s.downcase.include?("minequest") || sidequest.title.to_s.downcase.include?("minequest")
+     end %>
+
+  <h2 class="sidequests-index__section-title">Active Sidequests</h2>
   <div class="sidequests-index__cards">
-    <% @active_sidequests.each do |sidequest| %>
+    <% if minequest_sidequests.any? %>
+      <% minequest_sidequests.each do |sidequest| %>
+        <%= render_sidequest_card(sidequest) %>
+      <% end %>
+    <% else %>
+      <%= render "sidequests/minequest_placeholder" %>
+    <% end %>
+
+    <% other_active_sidequests.each do |sidequest| %>
       <%= render_sidequest_card(sidequest) %>
     <% end %>
   </div>

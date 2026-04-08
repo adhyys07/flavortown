@@ -1,0 +1,33 @@
+<% content_for :title, "Minequest" %>
+<% content_for :og_description, "Minequest sidequest details and submission timeline." %>
+<% content_for :og_image, og_image_url('sidequests', format: :png) %>
+<% content_for :twitter_card, "summary_large_image" %>
+
+<%= render HeadingComponent.new(title: "Minequest", tone: :blue, size: :full) %>
+
+<div class="sidequest-show">
+  <div class="sidequest-show__content">
+    <p class="sidequest-show__description">
+      Minequest is coming soon. This page is ready and will be updated with full rules, rewards, and submission flow.
+    </p>
+
+    <div class="sidequest-card sidequest-card--blue sidequest-show__minequest-card">
+      <div class="sidequest-card__content">
+        <h1 class="sidequest-card__title">Minequest</h1>
+        <div class="sidequest-card__image-placeholder" role="img" aria-label="Minequest placeholder image">
+          Replace with Minequest image
+        </div>
+        <h2>Basic Minequest page placeholder.</h2>
+      </div>
+    </div>
+
+    <div class="sidequest-show__actions">
+      <%= render ButtonComponent.new(
+            text: "← Back to Sidequests",
+            href: sidequests_path,
+            color: :brown,
+            variant: :borderless
+          ) %>
+    </div>
+  </div>
+</div>

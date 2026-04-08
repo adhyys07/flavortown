@@ -48,6 +48,21 @@
     border-radius: 1em;
   }
 
+  &__image-placeholder {
+    width: 100%;
+    min-height: 220px;
+    border-radius: 1em;
+    border: 2px dashed rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: var(--font-family-text);
+    padding: 1rem;
+  }
+
   &__buttons {
     display: flex;
     flex-direction: row;
